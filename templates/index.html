@@ -3,7 +3,6 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<meta http-equiv="refresh" content="5"/>
 		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
 		<link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" type="image/x-icon">
 		<title>Status Page</title>
@@ -48,7 +47,7 @@
 			</div>
 		</div>
 		<div class="footer">
-			<p>Generated in {{elapsed}} ms on {{time_now}} using Flask</p>
+			<p>Generated in {{elapsed}} ms on {{time_now}}</p>
 		</div>
 	</body>
 </html>

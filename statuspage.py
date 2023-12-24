@@ -1,6 +1,7 @@
 import time
 import subprocess
 import json
+from subprocess import DEVNULL
 from flask import Flask
 from flask import render_template
 from datetime import datetime
@@ -12,17 +13,19 @@ app.wsgi_app = ProxyFix(
     app.wsgi_app, x_for=2, x_proto=2, x_host=1, x_prefix=1
 )
 
-def get_status(query_types, domains):
+def get_status(query_types, domains, logfile):
     status = { query : [] for query in query_types }
     processes = { domain : [] for domain in domains }
 
     # Start all queries in parallel
     for domain in domains:
         ping = subprocess.Popen(['ping', '-W', '1', '-c', '1', domain],
-                                stdout=None)
+                                 stdout=logfile, stderr=logfile)
         http = subprocess.Popen(['curl', '--max-time', '2', '-f',
-                                 'https://' + domain], stdout=None)
-        dns = subprocess.Popen(['nslookup', domain], stdout=None)
+                                 'https://' + domain],
+                                 stdout=logfile, stderr=logfile)
+        dns = subprocess.Popen(['nslookup', domain],
+                                 stdout=logfile, stderr=logfile)
 
         processes[domain] = {'ping' : ping, 'http' : http, 'dns' : dns }
 
@@ -65,7 +68,14 @@ def index ():
     domains = get_domains('config.json')
     hostname = get_hostname('config.json')
 
-    ping_status, http_status, dns_status = get_status(query_types, domains)
+    # For debugging only
+    # with open('queries.log', 'w') as log:
+
+    # Disable logging
+    log = DEVNULL
+    ping_status, http_status, dns_status = get_status(query_types,
+                                                      domains,
+                                                      log)
 
     end = time.time_ns()
     elapsed = (end - start) / 1e6
