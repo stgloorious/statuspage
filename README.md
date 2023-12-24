@@ -1,4 +1,4 @@
-# Status Page for my Infrastructure
+# Status Page for Homelab
 This is the source code for my simple status website built using Flask.
 Upon visiting the site, the Flask app makes a few simple queries to see
 which services are online.
@@ -19,11 +19,10 @@ flask --app statuspage run
 ~~~
 
 ## Deployment
-On the public server, the Flask app is running behind an nginx reverse proxy.
 See the [Flask documentation](https://flask.palletsprojects.com/en/latest/deploying/nginx/)
 for more information.
 
-Configure nginx to serve `/static` directly and provide a config.json with your domains:
+Configure the webserver to serve `/static` directly and provide a config.json with your domains:
 ~~~
 {
     "domains" : ["example.com", "localhost"],
