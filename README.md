@@ -20,12 +20,25 @@ flask --app statuspage run
 
 ## Deployment
 See the [Flask documentation](https://flask.palletsprojects.com/en/latest/deploying/nginx/)
-for more information.
+for more information. I use Apache with simple CGI because there is no
+(performance) reason to set up FastCGI or similar.
 
-Configure the webserver to serve `/static` directly and provide a `config.json` with your domains:
+Provide a `config.json` with your domains:
 ~~~
 {
     "domains" : ["example.com", "localhost"],
     "hostname" : "foo.bar"
 }
+~~~
+
+Configure your webserver with CGI to run the script. Make sure to not expose
+unwanted files (`.git`, `__pycache__`).
+
+
+## Issues
+If you run into issues using ping, make sure capabalities for normal users
+are set:
+
+~~~
+setcap cap_net_raw+p /bin/ping
 ~~~
