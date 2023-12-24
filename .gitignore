@@ -1,2 +1,4 @@
 tags
 __pycache__
+*.xcf
+config.json
