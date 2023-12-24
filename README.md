@@ -22,7 +22,7 @@ flask --app statuspage run
 See the [Flask documentation](https://flask.palletsprojects.com/en/latest/deploying/nginx/)
 for more information.
 
-Configure the webserver to serve `/static` directly and provide a config.json with your domains:
+Configure the webserver to serve `/static` directly and provide a `config.json` with your domains:
 ~~~
 {
     "domains" : ["example.com", "localhost"],
