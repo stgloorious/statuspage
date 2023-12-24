@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta http-equiv="refresh" content="5"/>
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" type="text/css">
+		<link rel="icon" href="{{ url_for('static', filename='assets/favicon.ico') }}" type="image/x-icon">
+		<title>Status Page</title>
+	</head>
+	<body>
+		<div class="header">
+			<h2>Status Page of {{hostname}}</h2>
+		</div>
+		<div class="content">
+			<div class="category">
+				<div class="category-title"><h3>IPv4 Ping</h3></div>
+				<div class="hosts">
+					{% for item in ping_status %}
+					<div class="host-entry-{{item["color"]}}">
+						<div class="host-name"><h5>{{item["name"]}}</h5></div>
+						<div class="host-status"><h5>{{item["status"]}}</h5></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="category">
+				<div class="category-title"><h3>IPv4 HTTP</h3></div>
+				<div class="hosts">
+					{% for item in http_status %}
+					<div class="host-entry-{{item["color"]}}">
+						<div class="host-name"><h5>{{item["name"]}}</h5></div>
+						<div class="host-status"><h5>{{item["status"]}}</h5></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="category">
+				<div class="category-title"><h3>DNS</h3></div>
+				<div class="hosts">
+					{% for item in dns_status %}
+					<div class="host-entry-{{item["color"]}}">
+						<div class="host-name"><h5>{{item["name"]}}</h5></div>
+						<div class="host-status"><h5>{{item["status"]}}</h5></div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+		<div class="footer">
+			<p>Generated in {{elapsed}} ms on {{time_now}} using Flask</p>
+		</div>
+	</body>
+</html>
