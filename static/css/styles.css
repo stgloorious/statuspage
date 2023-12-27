@@ -63,18 +63,7 @@ body {
 	gap: 10px;
 }
 
-.host-entry-good {
-	background-color: #70f070;
-	padding-left: 20px;
-	padding-right: 20px;
-	padding-top: 0px;
-	padding-bottom: 0px;
-	border-radius: 10px;
-	display: flex;
-	justify-content: space-between;
-}
-.host-entry-bad {
-	background-color: #f07070;
+.host-entry {
 	padding-left: 20px;
 	padding-right: 20px;
 	padding-top: 0px;

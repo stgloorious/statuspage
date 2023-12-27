@@ -8,7 +8,7 @@ which services are online.
 ## TODO
  - [x] Basic functionality
  - [x] Config file instead of hard-coded domains
- - [ ] Config file instead of hard-coded queries
+ - [x] Config file instead of hard-coded queries
  - [ ] Add more informative text instead of "OK" and "UNREACHABLE"
  - [ ] IPv6 things
 
@@ -26,13 +26,90 @@ for more information. I use Apache with simple CGI because there is no
 Provide a `config.json` with your domains:
 ~~~
 {
-    "domains" : ["example.com", "localhost"],
-    "hostname" : "foo.bar"
+    "hostname": "foo.bar"
+    "domains": [
+        {
+            "uri": "example.com",
+            "supported_queries": [
+                "ping",
+                "dns",
+                "https"
+            ]
+        },
+        {
+            "uri": "localhost",
+            "supported_queries": [
+                "ping",
+                "http",
+                "https"
+            ]
+        }
+    ],
+    "query_types": [
+        {
+            "id": "ping",
+            "pretty_name": "Ping",
+            "cmd": [
+                "ping",
+                "-W",
+                "3",
+                "-c",
+                "1",
+                "{uri}"
+            ],
+            "text_nonzero": "UNREACHABLE",
+            "text_zero": "OK",
+            "color_nonzero": "f07070",
+            "color_zero": "70f070"
+        },
+        {
+            "id": "dns",
+            "pretty_name": "DNS",
+            "cmd": [
+                "nslookup",
+                "{uri}"
+            ],
+            "text_nonzero": "UNREACHABLE",
+            "text_zero": "OK",
+            "color_nonzero": "f07070",
+            "color_zero": "70f070"
+        },
+        {
+            "id": "https",
+            "pretty_name": "HTTPS",
+            "cmd": [
+                "curl",
+                "--max-time",
+                "3",
+                "-f",
+                "https://{uri}"
+            ],
+            "text_nonzero": "UNREACHABLE",
+            "text_zero": "OK",
+            "color_nonzero": "f07070",
+            "color_zero": "70f070"
+        },
+        {
+            "id": "http",
+            "pretty_name": "HTTP",
+            "cmd": [
+                "curl",
+                "--max-time",
+                "3",
+                "-f",
+                "http://{uri}"
+            ],
+            "text_nonzero": "UNREACHABLE",
+            "text_zero": "OK",
+            "color_nonzero": "f07070",
+            "color_zero": "70f070"
+        }
+    ]
 }
 ~~~
 
 Configure your webserver with CGI to run the script. Make sure to not expose
-unwanted files (`.git`, `__pycache__`).
+unwanted files (`.git`, `__pycache__`, `config.json`).
 
 
 ## Issues

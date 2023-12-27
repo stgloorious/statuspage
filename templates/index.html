@@ -12,39 +12,19 @@
 			<h2>Status Page of {{hostname}}</h2>
 		</div>
 		<div class="content">
+			{% for query in queries %}
 			<div class="category">
-				<div class="category-title"><h3>IPv4 Ping</h3></div>
+				<div class="category-title"><h3>{{query["pretty_name"]}}</h3></div>
 				<div class="hosts">
-					{% for item in ping_status %}
-					<div class="host-entry-{{item["color"]}}">
-						<div class="host-name"><h5>{{item["name"]}}</h5></div>
-						<div class="host-status"><h5>{{item["status"]}}</h5></div>
+					{% for domain in query['domains'] %}
+					<div class="host-entry", style="background-color:#{{domain["color"]}}">
+						<div class="host-name"><h5>{{domain["uri"]}}</h5></div>
+						<div class="host-status"><h5>{{domain["text"]}}</h5></div>
 					</div>
 					{% endfor %}
 				</div>
 			</div>
-			<div class="category">
-				<div class="category-title"><h3>IPv4 HTTP</h3></div>
-				<div class="hosts">
-					{% for item in http_status %}
-					<div class="host-entry-{{item["color"]}}">
-						<div class="host-name"><h5>{{item["name"]}}</h5></div>
-						<div class="host-status"><h5>{{item["status"]}}</h5></div>
-					</div>
-					{% endfor %}
-				</div>
-			</div>
-			<div class="category">
-				<div class="category-title"><h3>DNS</h3></div>
-				<div class="hosts">
-					{% for item in dns_status %}
-					<div class="host-entry-{{item["color"]}}">
-						<div class="host-name"><h5>{{item["name"]}}</h5></div>
-						<div class="host-status"><h5>{{item["status"]}}</h5></div>
-					</div>
-					{% endfor %}
-				</div>
-			</div>
+			{% endfor %}
 		</div>
 		<div class="footer">
 			<p>Generated in {{elapsed}} ms on {{time_now}}</p>
